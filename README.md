@@ -2,9 +2,9 @@
 
 ## Sentence segmentation
 
-***F-1 score on cross-validation (1/3 of data is test data)***: 0.997  
-***Last update***: 30 may 2017  
-***Train data***: 4k+ OpenCorpora articles (mostly news and fiction literature)  
+F-1 score on cross-validation (1/3 of data is test data): 0.997  
+Last update: 30 may 2017  
+Train data: 4k+ OpenCorpora articles (mostly news and fiction literature)  
 
 ```bash
 $ python sentence-segmentation.py

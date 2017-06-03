@@ -26,7 +26,6 @@ Train data: 4k+ OpenCorpora articles (mostly news and fiction literature)
 
 ```bash
 $ python tokenization.py
-python tokenization.py 
 Input text: Плита дорожная железобетонная ПДН.м Серия 3.503.1-91, выпуск 1
 П л и т а   д о р о ж н а я   ж е л е з о б е т о н н а я   П Д Н . м   С е р и я   3 . 5 0 3 . 1 - 9 1 ,   в ы п у с к   1
 B I I I I O B I I I I I I I O B I I I I I I I I I I I I I O B I I B I O B I I I I O B I I I I I I I I I B O B I I I I I O B

@@ -2,7 +2,7 @@
 
 ## Sentence segmentation
 
-F-1 score on cross-validation (1/3 of data is test data): 0.997  
+F1 score on cross-validation (1/3 of data is test data): 0.997  
 Last update: 30 may 2017  
 Train data: 4k+ OpenCorpora articles (mostly news and fiction literature)  
 
@@ -20,7 +20,17 @@ Input text: Разница цепей Маркова от сетей Марко�
 
 ## Tokenization
 
-TBD
+F1 score on cross-validation (1/3 of data is test data): 0.98  
+Last update: 3 june 2017  
+Train data: 4k+ OpenCorpora articles (mostly news and fiction literature)  
+
+```bash
+$ python tokenization.py
+python tokenization.py 
+Input text: Плита дорожная железобетонная ПДН.м Серия 3.503.1-91, выпуск 1
+П л и т а   д о р о ж н а я   ж е л е з о б е т о н н а я   П Д Н . м   С е р и я   3 . 5 0 3 . 1 - 9 1 ,   в ы п у с к   1
+B I I I I O B I I I I I I I O B I I I I I I I I I I I I I O B I I B I O B I I I I O B I I I I I I I I I B O B I I I I I O B
+```
 
 ## License
 

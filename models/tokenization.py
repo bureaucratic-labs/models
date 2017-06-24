@@ -1,15 +1,9 @@
-import tqdm
-import itertools
+from itertools import islice
 
-
-from opencorpora import CorpusReader
+from tqdm import tqdm
 from pycrfsuite import Trainer, Tagger
 
-
-from sklearn.model_selection import train_test_split
-
-
-corpus = CorpusReader('annot.opcorpora.xml')
+from models.settings import TOKENIZATION_MODEL_PATH
 
 
 def char2features(text, i):
@@ -68,51 +62,64 @@ def text2labels(text, words):
         )
     labels = [c for c in text]
     for i, char in enumerate(labels):
-        if char not in {'B', 'I', 'E'}:
+        if char not in {'B', 'I'}:
             labels[i] = 'O'
     return labels
 
 
 def text2features(text):
-    return [
+    return (
         char2features(text, i) for i, _ in enumerate(text)
-    ]
+    )
 
 
-def get_train_data(corpus, **kwargs):
+def labels2tokens(text, labels):
+    buff = ''
+    for i, c in enumerate(labels):
+        if c == 'B':
+            if buff:
+                yield buff
+            buff = text[i]
+        elif c == 'I':
+            buff += text[i]
+        elif c == 'O':
+            if buff:
+                yield buff
+            buff = ''
+    if buff:
+        yield buff
+
+
+def get_train_data(corpus, count=None, **kwargs):
     X = []
     y = []
 
     documents = corpus.iter_documents()
+    if count:
+        documents = islice(documents, count)
 
-    for document in tqdm.tqdm(documents):
+    for document in tqdm(documents):
         try:
             text = document.raw()
             words = document.words()
 
             labels = text2labels(text, words)
-            features = text2features(text)
+            features = list(text2features(text))
 
             X.append(features)
             y.append(labels)
-        except:
+        except Exception as exc:
+            # TODO:
             continue
 
     return train_test_split(X, y, **kwargs)
 
 
-model_name = 'data/tokenization-model.crfsuite'
-
-X_train, X_test, y_train, y_test = get_train_data(corpus, test_size=0.10, random_state=42)
-
-print('Train data:', len(X_train))
-print('Test data:', len(X_test))
-
 def train(X_train, y_train, **kwargs):
     '''
     >>> corpus = CorpusReader('annot.opcorpora.xml')
     >>> X_train, x_test, y_train, y_test = get_train_data(corpus, test_size=0.33, random_state=42)
-    >>> crf = train(X_train, y_train,)
+    >>> crf = train(X_train, y_train)
     '''
     crf = Trainer()
     crf.set_params({
@@ -124,19 +131,23 @@ def train(X_train, y_train, **kwargs):
 
     for xseq, yseq in zip(X_train, y_train):
         crf.append(xseq, yseq)
-    crf.train(model_name)
+    crf.train(TOKENIZATION_MODEL_PATH)
     return crf
 
-crf = train(X_train, y_train)
 
+class Tokenizer:
 
-tagger = Tagger()
-tagger.open(model_name)
+    '''
+    Simple interface to CRFSuite tagger, that returns labels for
+    each char in given text (actually, does tokenizing)
+    '''
 
+    def __init__(self, tagger=None):
+        if not tagger:
+            tagger = Tagger()
+            tagger.open(TOKENIZATION_MODEL_PATH)
+        self.tagger = tagger
 
-while True:
-    text = input('Input text: ')
-    features = text2features(text)
-    labels = tagger.tag(features)
-    print(' '.join(text))
-    print(' '.join(labels))
+    def tokenize(self, sentence):
+        labels = self.tagger.tag(text2features(sentence))
+        return labels2tokens(sentence, labels)

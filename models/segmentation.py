@@ -1,11 +1,9 @@
-import tqdm
-import itertools
+from itertools import islice
 
-from opencorpora import CorpusReader
+from tqdm import tqdm
 from pycrfsuite import Trainer, Tagger
 
-
-model_name = 'data/sentence-segmentation-model.crfsuite'
+from models.settings import SENTENCE_SEGMENTATION_MODEL_PATH 
 
 
 def char2features(sentence, i):
@@ -117,7 +115,7 @@ def get_train_data(corpus, **kwargs):
 
     documents = corpus.iter_documents()
 
-    for document in tqdm.tqdm(documents):
+    for document in tqdm(documents):
         text = document.raw()
         sents = document.raw_sents()
 
@@ -148,14 +146,15 @@ def train(X_train, X_test, y_train, y_test, **kwargs):
     crf.train(model_name)
     return crf
 
-if __name__ == '__main__':
-    tagger = Tagger()
-    tagger.open(model_name)
 
-    text = input('Input text: ')
+class SentenceSegmentator:
 
-    labels = tagger.tag(sent2features(text))
-    sentences = text2sentences(text, labels)
+    def __init__(self, tagger=None):
+        if not tagger:
+            tagger = Tagger()
+            tagger.open(SENTENCE_SEGMENTATION_MODEL_PATH)
+        self.tagger = tagger
 
-    for i, sentence in enumerate(sentences):
-        print('{0}:'.format(i), sentence)
+    def split(self, text):
+        labels = self.tagger.tag(sent2features(text))
+        return text2sentences(text, labels)

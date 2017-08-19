@@ -6,5 +6,4 @@ python:
   - 3.6
 install:
   - python setup.py develop
-  - pip install pytest
-script: pytest b_labs_models
+script: py.test b_labs_models

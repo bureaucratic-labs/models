@@ -1,7 +1,7 @@
 import pytest
 
 
-from models import Tokenizer
+from b_labs_models import Tokenizer
 
 
 @pytest.fixture

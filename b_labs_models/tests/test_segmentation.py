@@ -1,6 +1,6 @@
 import pytest
 
-from models import SentenceSegmentator
+from b_labs_models import SentenceSegmentator
 
 
 @pytest.fixture

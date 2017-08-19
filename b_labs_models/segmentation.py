@@ -1,9 +1,16 @@
 from itertools import islice
-
-from tqdm import tqdm
 from pycrfsuite import Trainer, Tagger
 
-from models.settings import SENTENCE_SEGMENTATION_MODEL_PATH
+try:
+    # tagging and training support
+    from tqdm import tqdm
+    from opencorpora import CorpusReader
+    from sklearn.model_selection import train_test_split
+except ImportError:
+    # only tagging support
+    pass
+
+from b_labs_models.settings import SENTENCE_SEGMENTATION_MODEL_PATH
 
 
 def char2features(sentence, i):
@@ -121,15 +128,22 @@ def get_train_data(corpus, **kwargs):
 
     documents = corpus.iter_documents()
 
+    if count:
+        documents = islice(documents, count)
+
     for document in tqdm(documents):
-        text = document.raw()
-        sents = document.raw_sents()
+        try:
+            text = document.raw()
+            sents = document.raw_sents()
 
-        labels = text2labels(text, sents)
-        features = sent2features(text)
+            labels = text2labels(text, sents)
+            features = sent2features(text)
 
-        X.append(features)
-        y.append(labels)
+            X.append(features)
+            y.append(labels)
+        except Exception as exc:
+            # TODO:
+            pass
 
     return train_test_split(X, y, **kwargs)
 

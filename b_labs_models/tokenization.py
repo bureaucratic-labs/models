@@ -1,9 +1,16 @@
 from itertools import islice
-
-from tqdm import tqdm
 from pycrfsuite import Trainer, Tagger
 
-from models.settings import TOKENIZATION_MODEL_PATH
+try:
+    # tagging and training support
+    from tqdm import tqdm
+    from opencorpora import CorpusReader
+    from sklearn.model_selection import train_test_split
+except ImportError:
+    # only tagging support
+    pass
+
+from b_labs_models.settings import TOKENIZATION_MODEL_PATH
 
 
 def char2features(text, i):

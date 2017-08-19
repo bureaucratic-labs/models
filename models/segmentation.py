@@ -3,7 +3,7 @@ from itertools import islice
 from tqdm import tqdm
 from pycrfsuite import Trainer, Tagger
 
-from models.settings import SENTENCE_SEGMENTATION_MODEL_PATH 
+from models.settings import SENTENCE_SEGMENTATION_MODEL_PATH
 
 
 def char2features(sentence, i):
@@ -23,6 +23,9 @@ def char2features(sentence, i):
         'isupper={0}'.format(char.isupper()),
         'isnumeric={0}'.format(char.isnumeric()),
     ]
+
+    if i == 0:
+        features.extend(['BOS'])
 
     if i > 0:
         char = sentence[i - 1]
@@ -55,6 +58,9 @@ def char2features(sentence, i):
             '+2:isupper={0}'.format(char.isupper()),
             '+2:isnumeric={0}'.format(char.isnumeric()),
         ])
+
+    if i == len(sentence) - 1:
+        features.extend(['EOS'])
 
     return features
 

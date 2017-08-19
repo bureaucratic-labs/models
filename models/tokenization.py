@@ -15,6 +15,9 @@ def char2features(text, i):
         'isnumeric={0}'.format(char.isnumeric()),
     ]
 
+    if i == 0:
+        features.extend(['BOS'])
+
     if i > 0:
         char = text[i - 1]
         features.extend([
@@ -46,6 +49,9 @@ def char2features(text, i):
             '+2:isupper={0}'.format(char.isupper()),
             '+2:isnumeric={0}'.format(char.isnumeric()),
         ])
+
+    if i >= len(text):
+        features.extend(['EOS'])
 
     return features
 

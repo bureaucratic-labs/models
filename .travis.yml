@@ -4,5 +4,7 @@ python:
   - 3.4
   - 3.5
   - 3.6
-install: python setup.py develop
+install:
+  - python setup.py develop
+  - pip install pytest
 script: pytest b_labs_models

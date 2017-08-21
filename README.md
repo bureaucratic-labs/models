@@ -1,6 +1,6 @@
 # b-labs-models [![Build Status](https://travis-ci.org/bureaucratic-labs/models.svg?branch=master)](https://travis-ci.org/bureaucratic-labs/models)
 
-Готовые к использованию статистические модели для русского языка
+Готовые к использованию статистические модели для русского языка  
 В качестве обучающего корпуса использовался словарь [OpenCorpora](http://opencorpora.org/) (4,000+ документов на конец мая 2017 года, в основном - новости и художественная литература)  
 
 # Установка
@@ -59,6 +59,8 @@ assert list(tokens) == [
 
 ```python
 from b_labs_models import POSTagger
+
+tagger = POSTagger()
 
 tokens = ['Весело', 'стучали', 'храбрые', 'сердца']
 labels = tagger.tag(tokens)

@@ -213,5 +213,4 @@ class POSTagger:
         self.tagger = tagger
 
     def tag(self, tokens):
-        labels = self.tagger.tag(sent2posfeatures(tokens))
-        return zip(tokens, labels)
+        return self.tagger.tag(sent2posfeatures(tokens))

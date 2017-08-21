@@ -15,6 +15,7 @@ from b_labs_models.settings import TOKENIZATION_MODEL_PATH
 
 def char2features(text, i):
     char = text[i]
+    length = len(text)
 
     features = [
         'lower={0}'.format(char.lower()),
@@ -41,7 +42,7 @@ def char2features(text, i):
             '-2:isnumeric={0}'.format(char.isnumeric()),
         ])
 
-    if i < len(text) - 1:
+    if i < length - 1:
         char = text[i + 1]
         features.extend([
             '+1:lower={0}'.format(char.lower()),
@@ -49,7 +50,7 @@ def char2features(text, i):
             '+1:isnumeric={0}'.format(char.isnumeric()),
         ])
 
-    if i < len(text) - 2:
+    if i < length - 2:
         char = text[i + 2]
         features.extend([
             '+2:lower={0}'.format(char.lower()),
@@ -57,7 +58,7 @@ def char2features(text, i):
             '+2:isnumeric={0}'.format(char.isnumeric()),
         ])
 
-    if i >= len(text):
+    if i == length - 1:
         features.extend(['EOS'])
 
     return features
@@ -161,6 +162,6 @@ class Tokenizer:
             tagger.open(TOKENIZATION_MODEL_PATH)
         self.tagger = tagger
 
-    def tokenize(self, sentence):
+    def split(self, sentence):
         labels = self.tagger.tag(text2features(sentence))
         return labels2tokens(sentence, labels)

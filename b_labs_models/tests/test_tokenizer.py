@@ -10,10 +10,10 @@ def tokenizer():
 
 
 def test_split_tokens(tokenizer):
-    tokens = list(tokenizer.tokenize('тест один два три.'))
+    tokens = list(tokenizer.split('тест один два три.'))
     assert tokens == ['тест', 'один', 'два', 'три', '.']
 
 
 def test_split_more_complex_tokens(tokenizer):
-    tokens = list(tokenizer.tokenize('Это МиГ-17 на хвосту ...'))
+    tokens = list(tokenizer.split('Это МиГ-17 на хвосту ...'))
     assert tokens == ['Это', 'МиГ-17', 'на', 'хвосту', '...']

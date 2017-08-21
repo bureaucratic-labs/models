@@ -11,3 +11,7 @@ SENTENCE_SEGMENTATION_MODEL_PATH = os.path.join(
 TOKENIZATION_MODEL_PATH = os.path.join(
     MODELS_PATH, 'tokenization-model.crfsuite',
 )
+
+PART_OF_SPEECH_MODEL_PATH = os.path.join(
+    MODELS_PATH, 'part-of-speech.crfsuite',
+)

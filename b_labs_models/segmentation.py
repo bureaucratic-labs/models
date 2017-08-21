@@ -24,6 +24,7 @@ def char2features(sentence, i):
     3. result of calling `character.isnumeric()` method
     '''
     char = sentence[i]
+    length = len(sentence)
 
     features = [
         'lower={0}'.format(char.lower()),
@@ -50,7 +51,7 @@ def char2features(sentence, i):
             '-2:isnumeric={0}'.format(char.isnumeric()),
         ])
 
-    if i < len(sentence) - 1:
+    if i < length - 1:
         char = sentence[i + 1]
         features.extend([
             '+1:lower={0}'.format(char.lower()),
@@ -58,7 +59,7 @@ def char2features(sentence, i):
             '+1:isnumeric={0}'.format(char.isnumeric()),
         ])
 
-    if i < len(sentence) - 2:
+    if i < length - 2:
         char = sentence[i + 2]
         features.extend([
             '+2:lower={0}'.format(char.lower()),
@@ -66,7 +67,7 @@ def char2features(sentence, i):
             '+2:isnumeric={0}'.format(char.isnumeric()),
         ])
 
-    if i == len(sentence) - 1:
+    if i == length - 1:
         features.extend(['EOS'])
 
     return features

@@ -3,8 +3,8 @@ from setuptools import setup, find_packages
 
 setup(
     name='b-labs-models',
-    version='2017.8.19',
-    description='Ready to use CRFSuite models for sentence segmentation and tokenization',
+    version='2017.8.22',
+    description='Ready to use CRFSuite models for sentence segmentation, tokenization and so on',
     url='https://github.com/bureaucratic-labs/models',
     author='Dmitry Veselov',
     author_email='d.a.veselov@yandex.ru',

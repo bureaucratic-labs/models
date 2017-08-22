@@ -31,7 +31,7 @@ def token2posfeatures(sentence, i):
         features.extend(['BOS'])
 
     if i > 0:
-        char = sentence[i - 1]
+        token = sentence[i - 1]
         features.extend([
             '-1:lower={0}'.format(token.lower()),
             '-1:isupper={0}'.format(token.isupper()),
@@ -43,7 +43,7 @@ def token2posfeatures(sentence, i):
         ])
 
     if i > 1:
-        char = sentence[i - 2]
+        token = sentence[i - 2]
         features.extend([
             '-2:lower={0}'.format(token.lower()),
             '-2:isupper={0}'.format(token.isupper()),
@@ -54,7 +54,7 @@ def token2posfeatures(sentence, i):
             '-2:content={0}'.format(token[3:-3].lower()),
         ])
     if i > 2:
-        char = sentence[i - 3]
+        token = sentence[i - 3]
         features.extend([
             '-3:lower={0}'.format(token.lower()),
             '-3:isupper={0}'.format(token.isupper()),
@@ -66,7 +66,7 @@ def token2posfeatures(sentence, i):
         ])
 
     if i > 3:
-        char = sentence[i - 4]
+        token = sentence[i - 4]
         features.extend([
             '-4:lower={0}'.format(token.lower()),
             '-4:isupper={0}'.format(token.isupper()),
@@ -78,7 +78,7 @@ def token2posfeatures(sentence, i):
         ])
 
     if i > 4:
-        char = sentence[i - 5]
+        token = sentence[i - 5]
         features.extend([
             '-5:lower={0}'.format(token.lower()),
             '-5:isupper={0}'.format(token.isupper()),
@@ -90,7 +90,7 @@ def token2posfeatures(sentence, i):
         ])
 
     if i < length - 1:
-        char = sentence[i + 1]
+        token = sentence[i + 1]
         features.extend([
             '+1:lower={0}'.format(token.lower()),
             '+1:isupper={0}'.format(token.isupper()),
@@ -102,7 +102,7 @@ def token2posfeatures(sentence, i):
         ])
 
     if i < length - 2:
-        char = sentence[i + 2]
+        token = sentence[i + 2]
         features.extend([
             '+2:lower={0}'.format(token.lower()),
             '+2:isupper={0}'.format(token.isupper()),
@@ -114,7 +114,7 @@ def token2posfeatures(sentence, i):
         ])
 
     if i < length - 3:
-        char = sentence[i + 3]
+        token = sentence[i + 3]
         features.extend([
             '+3:lower={0}'.format(token.lower()),
             '+3:isupper={0}'.format(token.isupper()),
@@ -126,7 +126,7 @@ def token2posfeatures(sentence, i):
         ])
 
     if i < length - 4:
-        char = sentence[i + 4]
+        token = sentence[i + 4]
         features.extend([
             '+4:lower={0}'.format(token.lower()),
             '+4:isupper={0}'.format(token.isupper()),
@@ -138,7 +138,7 @@ def token2posfeatures(sentence, i):
         ])
 
     if i < length - 5:
-        char = sentence[i + 5]
+        token = sentence[i + 5]
         features.extend([
             '+5:lower={0}'.format(token.lower()),
             '+5:isupper={0}'.format(token.isupper()),
